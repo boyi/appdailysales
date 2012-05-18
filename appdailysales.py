@@ -346,7 +346,6 @@ def downloadFile(options):
         print 'Accessing sales report web page.'
     urlSalesReport = 'https://reportingitc.apple.com/sales.faces'
     html = readHtml(opener, urlSalesReport, options=options)
-    print html
     # Get the form field names needed to download the report.
     try:
         match = re.findall('"javax.faces.ViewState" value="(.*?)"', html)
