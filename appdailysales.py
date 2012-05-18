@@ -346,17 +346,21 @@ def downloadFile(options):
         print 'Accessing sales report web page.'
     urlSalesReport = 'https://reportingitc.apple.com/sales.faces'
     html = readHtml(opener, urlSalesReport, options=options)
-
-
+    print html
     # Get the form field names needed to download the report.
     try:
         match = re.findall('"javax.faces.ViewState" value="(.*?)"', html)
         viewState = match[0]
         match = re.findall('theForm:j_id_jsp_[0-9]*_51', html)
         dailyName = match[0]
-        ajaxName = re.sub('._51', '4_2', dailyName)
-        dateName = re.sub('._51', '4_8', dailyName)
-        selectName = re.sub('._51', '4_30', dailyName)
+        c = int(dailyName[-4]);
+        c = (c + 1) % 10;
+        ajaxName = dailyName[:-4] + str(c) + '_2';
+        dateName = dailyName[:-4] + str(c) + '_8';
+        selectName = dailyName[:-4] + str(c) + '_30';
+        #ajaxName = re.sub('._51', '3_2', dailyName)
+        #dateName = re.sub('._51', '3_8', dailyName)
+        #selectName = re.sub('._51', '3_30', dailyName)
         if options.debug == True:
             print 'viewState: ', viewState
             print 'dailyName: ', dailyName
